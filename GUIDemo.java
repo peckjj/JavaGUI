@@ -12,9 +12,13 @@ import javax.swing.*;
  */
 public class GUIDemo extends JFrame
 {
-    private JPanel panel;
+    private JPanel  panel;
     private JButton biggerButton;
     private JButton smallerButton;
+    private JButton liarButton;
+    private String  liarButtonMessage;
+    private String  biggerButtonMessage;
+    private String  smallerButtonMessage;
 
     /**
      * Set up the application.
@@ -22,17 +26,23 @@ public class GUIDemo extends JFrame
     public GUIDemo()
     {
 	// CONSTRUCTOR NEEDS TO BE FINISHED!
+        liarButtonMessage = "TRUTH: ON";
+        biggerButtonMessage = "BIGGER";
+        smallerButtonMessage = "SMALLER";
         setTitle("Bigger/Smaller");
         setSize(200, 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new JPanel();
-        biggerButton = new JButton("BIGGER");
-        smallerButton = new JButton("SMALLER");
+        biggerButton = new JButton(biggerButtonMessage);
+        smallerButton = new JButton(smallerButtonMessage);
+        liarButton = new JButton(liarButtonMessage);
         biggerButton.addActionListener(new ButtonHandler());
         smallerButton.addActionListener(new ButtonHandler());
+        liarButton.addActionListener(new ButtonHandler());
         add(panel);
         panel.add(biggerButton);
         panel.add(smallerButton);
+        panel.add(liarButton);
         setVisible(true);
     }
 
@@ -54,9 +64,25 @@ public class GUIDemo extends JFrame
             {
                 setSize(size.width + 10, size.height + 10);
             }
-            else
+            else if (e.getSource().equals(smallerButton))
             {
                 setSize(size.width - 10, size.height - 10);
+            }
+            else
+            {
+                if (liarButton.getText().equals("TRUTH: ON"))
+                {
+                    liarButton.setText("TRUTH: OFF");
+                }
+                else
+                {
+                    liarButton.setText("TRUTH: ON");  
+                }
+                String temp = biggerButtonMessage;
+                biggerButtonMessage = smallerButtonMessage;
+                smallerButtonMessage = temp;
+                biggerButton.setText(biggerButtonMessage);
+                smallerButton.setText(smallerButtonMessage);
             }
 
         }
